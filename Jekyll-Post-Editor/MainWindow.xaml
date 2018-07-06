@@ -6,18 +6,21 @@
         xmlns:local="clr-namespace:Jekyll_post_editor"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" MouseMove="Window_MouseMove">
+        Title="MainWindow" Height="400" Width="525" MouseMove="Window_MouseMove" Icon="jekyll_post_editor.ico">
     <Window.Resources>
         <sys:String x:Key="strDefaultTitle">Enter Title Name !</sys:String>
         <sys:String x:Key="strDefaultHTMLContent">Enter HTML Content !</sys:String>
+        <SolidColorBrush x:Key="colorSide">#C6CCB2</SolidColorBrush>
+        <SolidColorBrush x:Key="colorSideDark">#afb39c</SolidColorBrush>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="21" />
             <RowDefinition Height="21" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -27,29 +30,44 @@
             <ColumnDefinition Width="200*" />
         </Grid.ColumnDefinitions>
 
-        <Border Background="#C6CCB2" Grid.Column="0" Grid.Row="0" Grid.RowSpan="6"/>
-        <Border Background="#BF4E30" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
-        <Border Background="#C5D1EB" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3"/>
+        <Border Background="{StaticResource colorSide}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="7"/>
 
-        <TextBlock HorizontalAlignment="Left" Text="Jekyll Post Editor - by Hoang Dang" TextWrapping="Wrap" FontWeight="Bold" FontSize="20" Grid.ColumnSpan="3" Background="#BF4E30" Margin="5,2" />
-        <TextBlock Text="Test R1 C1" FontSize="20" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
-        <TextBlock Text="Test R2 C1" FontSize="20" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+        <Rectangle  Fill="{StaticResource colorSideDark}" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3"/>
+        <Rectangle  Fill="{StaticResource colorSideDark}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3"/>
 
-        <!-- title -->
+        <Border Background="#FF9800" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
+        <Border Background="#C5D1EB" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="3"/>
+
+        <!-- App title -->
+        <TextBlock HorizontalAlignment="Left" Text="Jekyll Post Editor - by Hoang Dang" TextWrapping="Wrap" FontWeight="Bold" FontSize="20" Grid.ColumnSpan="3" Margin="5,2" />
+
+        <!-- Front matter -->
+        <TextBlock Text="Front Matter" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" FontWeight="Bold" Margin="5,0" TextWrapping="WrapWithOverflow"/>
+        <Grid Margin="10" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Name="g_front_mater">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <!-- Post preview -->
+        <TextBlock Text="Post Preview" HorizontalAlignment="Left" Grid.Row="6" Grid.Column="0" TextWrapping="WrapWithOverflow" FontWeight="Bold" Margin="5,0"/>
+        <WebBrowser  Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" local:BrowserBehavior.Html="{Binding MyHtmlString}" Name="wb_HTML_preview"/>
+
+        <!-- Post Title -->
         <TextBlock Text="Title" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" FontWeight="Bold" Margin="5,0"/>
         <TextBox Height="Auto" TextWrapping="Wrap" Text="{StaticResource strDefaultTitle}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Name="tb_title"/>
-        <!-- title -->
+        <!-- Post Date -->
         <TextBlock Text="Post Date" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" FontWeight="Bold" Margin="5,0"/>
-        <DatePicker Height="Auto" Text="TextBox" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Name="dp_post_date"/>
+        <DatePicker Height="20" Text="TextBox" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Name="dp_post_date"/>
         <!-- HTML files content -->
         <TextBlock Text="HTML Content" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" TextWrapping="WrapWithOverflow" FontWeight="Bold" Margin="5,0"/>
-        <TextBox Height="Auto" TextWrapping="Wrap" Text="{StaticResource strDefaultHTMLContent}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Name="tb_html_content"/>
+        <TextBox Height="Auto" TextWrapping="Wrap" Text="{StaticResource strDefaultHTMLContent}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Name="tb_html_content" TextChanged="tb_html_content_TextChanged" AcceptsReturn="True" SpellCheck.IsEnabled="True"/>
 
-        <Button Content="Save" HorizontalAlignment="Right"  Grid.Column="2" Grid.Row="6" VerticalAlignment="Top" Width="75" Click="Button_Click_Save"/>
-        <Button Content="Open" HorizontalAlignment="Right"  Grid.Column="2" Grid.Row="6" VerticalAlignment="Top" Width="75" Margin="0,0.2,75.4,0" Click="Button_Click_Open"/>
-        <Button Content="Cancel" HorizontalAlignment="Left"  Grid.Column="2" Grid.Row="6" VerticalAlignment="Top" Width="75" Margin="0,0.2,149.4,-0.6" Click="Button_Click_Cancel"/>
+        <Button Content="Save" HorizontalAlignment="Right"  Grid.Column="2" Grid.Row="7" VerticalAlignment="Top" Width="75" Click="Button_Click_Save"/>
+        <Button Content="Open" HorizontalAlignment="Right"  Grid.Column="2" Grid.Row="7" VerticalAlignment="Top" Width="75" Margin="0,0.2,75.4,0" Click="Button_Click_Open"/>
+        <Button Content="Exit" HorizontalAlignment="Left"  Grid.Column="2" Grid.Row="7" VerticalAlignment="Top" Width="75" Margin="0,0.2,149.4,-0.6" Click="Button_Click_Exit"/>
 
-        <TextBlock Text="Status" HorizontalAlignment="Left" Grid.Row="6" Grid.Column="0" FontWeight="Bold" Margin="5,0"/>
+        <TextBlock Text="Status" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="0" FontWeight="Bold" Margin="5,0"/>
         <TextBlock HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1" TextWrapping="Wrap" Name="tb_status"/>
 
     </Grid>
