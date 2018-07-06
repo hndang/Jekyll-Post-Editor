@@ -313,13 +313,20 @@ namespace Jekyll_post_editor
                 if (keyvalue.Length == 2)
                 {
                     // populate corresponding textbox with loaded value
-                    var id = fmDictionary_id.First(x => x.Value.Contains(keyvalue[0])).Key;
-                    tb_temp = (TextBox)g_front_mater.FindName(FRONT_MATTER_UI_NAME + id);
-                    if (tb_temp != null)
+                    try
                     {
-                        tb_temp.Text = keyvalue[1].TrimStart();
+                        var id = fmDictionary_id.First(x => x.Value.Contains(keyvalue[0])).Key;
+                        tb_temp = (TextBox)g_front_mater.FindName(FRONT_MATTER_UI_NAME + id);
+                        if (tb_temp != null)
+                        {
+                            tb_temp.Text = keyvalue[1].TrimStart();
+                        }
                     }
-
+                    catch(InvalidOperationException ioe)
+                    {
+                        Notify_Status("Post file doesn't match template front matter. Please review template/default.template !", false);
+                        return;
+                    }
                 }
             }
         }
