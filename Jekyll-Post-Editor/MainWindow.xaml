@@ -68,7 +68,7 @@
         <Button Content="Exit" HorizontalAlignment="Left"  Grid.Column="2" Grid.Row="7" VerticalAlignment="Top" Width="75" Margin="0,0.2,149.4,-0.6" Click="Button_Click_Exit"/>
 
         <TextBlock Text="Status" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="0" FontWeight="Bold" Margin="5,0"/>
-        <TextBlock HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1" TextWrapping="Wrap" Name="tb_status"/>
+        <TextBlock HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1" TextWrapping="Wrap" Name="tb_status" Text="Ready"/>
 
     </Grid>
 </Window>

@@ -96,7 +96,6 @@ namespace Jekyll_post_editor
                     Notify_Status("Failed to save !!", false);
                     Console.WriteLine("Exception Caught !! {0}", ex);
                 }
-
             }
         }
 
@@ -121,9 +120,11 @@ namespace Jekyll_post_editor
 
                         Markdown_Breakdown(raw_file, out front_matter, out post_content);
                         tb_html_content.Text = post_content;
-                        Load_Front_Matter(front_matter);
+                        if (Load_Front_Matter(front_matter)){
+                            Notify_Status("Open file Successful", true);
+                        }
 
-                        Notify_Status("Open file Successful", true);
+                        
 
                         if (DateTime.TryParseExact(rawName.Substring(0, 10), DATE_FORMAT, new CultureInfo("en-US"), DateTimeStyles.None, out DateTime postDate))
                         {
@@ -304,7 +305,7 @@ namespace Jekyll_post_editor
             return temp;
         }
 
-        private void Load_Front_Matter(string front_matter_string)
+        private bool Load_Front_Matter(string front_matter_string)
         {
             foreach (string line in front_matter_string.Split('\n'))
             {
@@ -325,10 +326,11 @@ namespace Jekyll_post_editor
                     catch(InvalidOperationException ioe)
                     {
                         Notify_Status("Post file doesn't match template front matter. Please review template/default.template !", false);
-                        return;
+                        return false;
                     }
                 }
             }
+            return true;
         }
 
         private void Markdown_Breakdown(string rawfile, out string front_matter, out string post_content)
